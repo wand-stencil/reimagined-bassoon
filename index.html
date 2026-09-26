@@ -1,0 +1,459 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Download</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(0, 174, 255, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(124, 58, 237, 0.18),
+                    transparent 35%
+                ),
+                #070b16;
+        }
+
+        /* Background glow */
+
+        .glow {
+            position: fixed;
+            width: 280px;
+            height: 280px;
+
+            border-radius: 50%;
+
+            filter: blur(80px);
+
+            opacity: .35;
+
+            pointer-events: none;
+
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .glow.one {
+            background: #008cff;
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow.two {
+            background: #743cff;
+            right: -100px;
+            bottom: -100px;
+
+            animation-delay: -4s;
+        }
+
+        @keyframes float {
+
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(25px, -25px);
+            }
+        }
+
+        /* Main card */
+
+        .card {
+            width: min(92%, 480px);
+
+            padding: 45px 30px;
+
+            text-align: center;
+
+            border-radius: 25px;
+
+            border: 1px solid rgba(255,255,255,.12);
+
+            background: rgba(255,255,255,.06);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.45);
+
+            animation: appear .7s ease-out;
+        }
+
+        @keyframes appear {
+
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Download icon */
+
+        .icon {
+            width: 82px;
+            height: 82px;
+
+            margin: 0 auto 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            font-size: 38px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00a8ff,
+                    #7138ff
+                );
+
+            box-shadow:
+                0 0 30px rgba(0,160,255,.35);
+
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.06);
+            }
+        }
+
+        /* Small label */
+
+        .label {
+            display: inline-block;
+
+            padding: 7px 14px;
+
+            margin-bottom: 15px;
+
+            border-radius: 50px;
+
+            color: #61ddff;
+
+            font-size: 11px;
+            font-weight: bold;
+
+            letter-spacing: 1.5px;
+
+            background: rgba(0,180,255,.08);
+
+            border: 1px solid rgba(0,180,255,.2);
+        }
+
+        /* Heading */
+
+        h1 {
+            margin-bottom: 12px;
+
+            font-size: clamp(30px, 7vw, 42px);
+            line-height: 1.15;
+        }
+
+        .gradient {
+            background:
+                linear-gradient(
+                    90deg,
+                    #00c8ff,
+                    #ffffff,
+                    #a26cff
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .description {
+            margin: 0 auto 30px;
+
+            max-width: 380px;
+
+            color: rgba(255,255,255,.6);
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+        /* Download button */
+
+        .download-button {
+            position: relative;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+            max-width: 300px;
+
+            padding: 17px 25px;
+
+            overflow: hidden;
+
+            border-radius: 50px;
+
+            color: #fff;
+
+            text-decoration: none;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #008cff,
+                    #7138ff,
+                    #008cff
+                );
+
+            background-size: 200% 100%;
+
+            box-shadow:
+                0 10px 30px rgba(0,130,255,.3);
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+
+            animation:
+                gradientMove 4s linear infinite,
+                buttonPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes gradientMove {
+
+            to {
+                background-position: 200% 0;
+            }
+        }
+
+        @keyframes buttonPulse {
+
+            0%, 100% {
+                box-shadow:
+                    0 10px 30px rgba(0,130,255,.25);
+            }
+
+            50% {
+                box-shadow:
+                    0 12px 40px rgba(0,160,255,.45);
+            }
+        }
+
+        /* Button shine */
+
+        .download-button::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -100%;
+
+            width: 55%;
+            height: 100%;
+
+            transform: skewX(-20deg);
+
+            background:
+                rgba(255,255,255,.2);
+
+            animation:
+                shine 3s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+
+            0% {
+                left: -100%;
+            }
+
+            45%, 100% {
+                left: 150%;
+            }
+        }
+
+        .download-button:hover {
+            transform: translateY(-4px) scale(1.02);
+
+            box-shadow:
+                0 16px 40px rgba(0,150,255,.45);
+        }
+
+        .download-button:active {
+            transform: scale(.97);
+        }
+
+        .button-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .arrow {
+            display: inline-block;
+
+            margin-right: 9px;
+
+            font-size: 21px;
+
+            animation:
+                arrowMove 1.2s ease-in-out infinite;
+        }
+
+        @keyframes arrowMove {
+
+            0%, 100% {
+                transform: translateY(-2px);
+            }
+
+            50% {
+                transform: translateY(3px);
+            }
+        }
+
+        /* Footer */
+
+        .footer {
+            margin-top: 22px;
+
+            color: rgba(255,255,255,.3);
+
+            font-size: 11px;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            .card {
+                padding: 38px 20px;
+            }
+
+            .download-button {
+                max-width: 100%;
+            }
+        }
+
+        /* Accessibility */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background -->
+
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+
+
+    <!-- Main Content -->
+
+    <div class="card">
+
+        <div class="icon">
+            ↓
+        </div>
+
+        <div class="label">
+            DOWNLOAD READY
+        </div>
+
+        <h1>
+            <span class="gradient">
+                Download Now
+            </span>
+        </h1>
+
+        <p class="description">
+            Your download is ready.
+            Click the button below to continue
+            to the download page.
+        </p>
+
+
+        <!-- =================================
+             CHANGE ONLY THIS LINK
+        ================================== -->
+
+        <a
+            href="https://mac-update.com/"
+            class="download-button"
+        >
+            <span class="button-content">
+
+                <span class="arrow">↓</span>
+
+                Download Now
+
+                <span>→</span>
+
+            </span>
+        </a>
+
+
+        <div class="footer">
+            ⚡ Fast &nbsp; • &nbsp;
+            🔒 Secure &nbsp; • &nbsp;
+            ✓ Ready
+        </div>
+
+    </div>
+
+</body>
+</html>
+```
